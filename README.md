@@ -18,9 +18,9 @@ sudo systemctl restart docker
 Init workspace
 
 ```bash
-mkdir -p ws/src
-cd ws/src
-git clone https://github.com/SoftServeSAG/order_fullfilement_robotic_arm.git
+mkdir -p turtlebot_ws/src
+cd turtlebot_ws/src
+git clone -b turtlebot --single-branch https://github.com/SoftServeSAG/order_fullfilement_robotic_arm.git
 ```
 
 Create docker net
@@ -45,3 +45,7 @@ sudo ./run.bash
 ```
 
 Inside docker container
+```bash
+cd ~/ws/src/order_fullfilement_robotic_arm/scripts
+./start.sh
+```
