@@ -19,7 +19,7 @@ docker run -it --rm \
     --hostname turtlebot_0 \
     --net ros_net \
     --ip 178.18.0.6 \
-   ros2_gazebo_8_ws
+   ros2_turtlebot_ws
 
 
 xhost -local:root
