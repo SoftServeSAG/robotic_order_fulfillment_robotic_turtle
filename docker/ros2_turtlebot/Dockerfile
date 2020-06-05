@@ -1,4 +1,4 @@
-FROM ros2_gazebo_8
+FROM ros2_base
 
 WORKDIR /root
 
@@ -30,8 +30,6 @@ RUN mkdir -p ~/deps_ws/src && \
     colcon build --symlink-install
 
 RUN echo "PS1='\[\e[33m\][MrTurtle]\[\e[m\] ${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '" >> ~/.bashrc
-
-
 
 RUN echo "source ~/deps_ws/install/setup.bash" >> ~/.bashrc
 RUN echo 'export ROS_DOMAIN_ID=30 #TURTLEBOT3' >> ~/.bashrc
