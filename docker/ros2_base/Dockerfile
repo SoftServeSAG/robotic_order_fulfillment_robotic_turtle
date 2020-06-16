@@ -1,6 +1,4 @@
-#FROM nvidia/opengl:1.0-glvnd-devel-ubuntu16.04
-
-FROM ubuntu:18.04
+FROM nvidia/opengl:1.0-glvnd-devel-ubuntu18.04
 
 WORKDIR /root
 
@@ -27,7 +25,8 @@ RUN apt-get update -y && apt-get install -y \
     ranger \
     g++ \
     net-tools \
-    curl 
+    curl \
+    gnupg 
 
 # Add key
 #RUN curl http://repo.ros2.org/repos.key | apt-key add -

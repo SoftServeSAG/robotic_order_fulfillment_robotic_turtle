@@ -8,6 +8,7 @@ WS_DIR_PATH=$(realpath "$SCRIPT_DIR_PATH/../../../..")
 xhost +local:root
 
 docker run -it --rm \
+    --runtime=nvidia \
     --privileged \
     --volume=/tmp/.X11-unix:/tmp/.X11-unix \
     --volume="$WS_DIR_PATH:/root/ws" \
