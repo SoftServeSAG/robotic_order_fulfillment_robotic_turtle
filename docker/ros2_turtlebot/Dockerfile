@@ -2,15 +2,25 @@ FROM ros2_base
 
 WORKDIR /root
 
+RUN set -x && \
+    echo "Upgrading Gazebo 9 to latest release" && \
+    echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" > /etc/apt/sources.list.d/gazebo-stable.list && \
+    wget http://packages.osrfoundation.org/gazebo.key -O - | apt-key add - && \
+    apt-get update && \
+    apt-get remove -y gazebo* && \
+    apt-get install -y libgazebo9 
+
 RUN apt-get update && apt-get install -y \
     openssh-server \
     gdb \
     gdbserver \
+    python3-vcstool \
     ros-$ROS_DISTRO-cartographer \
     ros-$ROS_DISTRO-cartographer-ros \
     ros-$ROS_DISTRO-navigation2 \
     ros-$ROS_DISTRO-nav2-bringup \
     ros-$ROS_DISTRO-action-msgs \
+    ros-$ROS_DISTRO-gazebo-ros-pkgs \
     ros-$ROS_DISTRO-ros1-bridge \
     ros-melodic-desktop \
     && rm -rf /var/lib/apt/lists/*
@@ -22,6 +32,7 @@ RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so
 
 RUN echo "source /opt/ros/$ROS_DISTRO/setup.bash" >> ~/.bashrc
 
+ 
 RUN mkdir -p ~/deps_ws/src && \
     cd ~/deps_ws && \
     wget https://raw.githubusercontent.com/ROBOTIS-GIT/turtlebot3/ros2/turtlebot3.repos && \

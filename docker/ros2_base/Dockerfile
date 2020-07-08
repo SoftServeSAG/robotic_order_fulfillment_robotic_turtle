@@ -36,7 +36,6 @@ RUN apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E
 
 RUN apt-get update && apt-get update && apt-get install -y \
     ros-$ROS_DISTRO-desktop \
-    ros-$ROS_DISTRO-gazebo-ros-pkgs \
     python3-catkin-pkg \
     python3-rospkg \
     python3-colcon-common-extensions \
