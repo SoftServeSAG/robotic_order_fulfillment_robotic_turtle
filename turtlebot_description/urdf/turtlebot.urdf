@@ -37,27 +37,6 @@
         <inertia  ixx="1.0" ixy="0.0"  ixz="0.0"  iyy="100.0"  iyz="0.0"  izz="1.0" />
       </inertial>
 
-     <collision name="collision">
-        <geometry>
-          <box size="0.5 0.5 0.02" />
-        </geometry>
-      </collision>
-
-      <visual name="visual">
-        <geometry>
-            <mesh
-              filename="package://xv_gazebo/media/models/turtlebot_plate/meshes/aruco.dae" 
-              scale="0.23 0.27 0.005"
-            />
-          </geometry>
-
-         <!-- <material>
-            <script>
-              <uri>model://xv_gazebo/medi/models/aruco_demo/meshes/aruco_demo.png</uri>
-            </script>
-          </material>-->
-      </visual>
-      <!--
         <visual>
         <geometry>
           <box size="0.5 0.5 0.02" />
@@ -69,9 +48,6 @@
           <box size="0.5 0.5 0.02" />
         </geometry>
       </collision>
-
-    -->
-
     </link>
 
     <joint name="base_plate_joint" type="fixed">
@@ -271,7 +247,7 @@
 	  </joint>
 
 
-  <gazebo reference="side4_top_joint">
-    <material>Gazebo/Blue</material>
+  <gazebo reference="base_plate">
+      <material>ArucoMaterial</material>
   </gazebo>
 </robot>
