@@ -31,7 +31,7 @@ sudo docker network create --driver=bridge --subnet=178.18.0.0/16 ros_net
 Build docker images
 
 ```bash
-robotic_order_fulfillment_robotic_turtle/docker/ros2_turtlebot/
+cd robotic_order_fulfillment_robotic_turtle/docker/ros2_turtlebot/
 sudo ./build.bash 
 ```
 
