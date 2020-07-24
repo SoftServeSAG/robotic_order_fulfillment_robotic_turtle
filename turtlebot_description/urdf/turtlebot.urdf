@@ -1,0 +1,253 @@
+<?xml version="1.0"?>
+<robot name="simple_box">
+  
+    <material name="blue">
+        <color rgba= "0 0 1 1"/>
+    </material>
+
+    <material name="grey">
+        <color rgba="0.75 0.75 0.75 1"/>
+    </material>
+
+    <!-- Turtlebot description -->
+    <link name="turtlebot">
+        <inertial>
+            <mass value="1.0" />
+            <inertia  ixx="1.0" ixy="0.0"  ixz="0.0"  iyy="100.0"  iyz="0.0"  izz="1.0" />
+        </inertial>
+
+        <visual>
+            <geometry>
+                <box size="0.3 0.3 0.5" />
+            </geometry>
+        </visual>
+
+        <collision>
+            <geometry>
+                <box size="0.3 0.3 0.5" />
+            </geometry>
+        </collision>
+    </link>
+
+
+    <!-- Plate on turtlebot top description -->
+    <link name="base_plate">
+      <inertial>
+        <mass value="1.0" />
+        <inertia  ixx="1.0" ixy="0.0"  ixz="0.0"  iyy="100.0"  iyz="0.0"  izz="1.0" />
+      </inertial>
+
+        <visual>
+        <geometry>
+          <box size="0.5 0.5 0.02" />
+        </geometry>
+      </visual>
+      
+      <collision>
+        <geometry>
+          <box size="0.5 0.5 0.02" />
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="base_plate_joint" type="fixed">
+    	<parent link="turtlebot"/>
+    	<child link="base_plate"/>
+    	<origin xyz="0 0 0.25" rpy="0 0 0"/>
+	  </joint>
+
+
+    <!-- Box description -->
+    <link name="base_link">
+      <inertial>
+        <mass value="1.0" />
+        <inertia  ixx="1.0" ixy="0.0"  ixz="0.0"  iyy="100.0"  iyz="0.0"  izz="1.0" />
+      </inertial>
+
+      <visual>
+        <geometry>
+          <box size="0.23 0.23 0.005" />
+        </geometry>
+      </visual>
+
+      <collision>
+        <geometry>
+          <box size="0.23 0.23 0.005" />
+        </geometry>
+      </collision>
+    </link>
+
+
+    <joint name="base_joint" type="fixed">
+    	<parent link="base_plate"/>
+    	<child link="base_link"/>
+    	<origin xyz="0 0 0.01" rpy="0 0 0"/>
+	  </joint>
+
+    <link name="side_1">
+      <visual>
+        <geometry>
+          <box size="0.24 0.005 0.21" />
+        </geometry>
+      </visual>
+
+      <collision>
+        <geometry>
+          <box size="0.24 0.005 0.21" />
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="side1_joint" type="fixed">
+    	<parent link="base_link"/>
+    	<child link="side_1"/>
+    	<origin xyz="0 -0.1175 0.105" rpy="0 0 0"/>
+	  </joint>
+
+    <link name="side_2">
+      <visual>
+        <geometry>
+          <box size="0.24 0.005 0.21" />
+        </geometry>
+      </visual>
+      
+      <collision>
+        <geometry>
+          <box size="0.24 0.005 0.21" />
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="side2_joint" type="fixed">
+    	<parent link="base_link"/>
+    	<child link="side_2"/>
+    	<origin xyz="0 0.1175 0.105" rpy="0 0 0"/>
+	  </joint>
+  
+    <link name="side_3">
+      <visual>
+        <geometry>
+            <box size="0.005 0.23 0.21" />
+        </geometry>
+      </visual>
+        
+      <collision>
+        <geometry>
+            <box size="0.005 0.23 0.21" />
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="side3_joint" type="fixed">
+    	<parent link="base_link"/>
+    	<child link="side_3"/>
+    	<origin xyz="0.1175 0.0 0.105" rpy="0 0 0"/>
+  	</joint>
+
+
+    <link name="side_4">
+      <visual>
+        <geometry>
+            <box size="0.005 0.23 0.21" />
+        </geometry>
+      </visual>
+        
+      <collision>
+        <geometry>
+            <box size="0.005 0.23 0.21" />
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="side4_joint" type="fixed">
+    	<parent link="base_link"/>
+    	<child link="side_4"/>
+    	<origin xyz="-0.1175 0.0 0.105" rpy="0 0 0"/>
+	  </joint>
+
+    <link name="side_1_top">
+      <visual>
+        <geometry>
+            <box size="0.24 0.005 0.13" />
+        </geometry>
+      </visual>
+        
+      <collision>
+        <geometry>
+            <box size="0.24 0.005 0.13" />
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="side1_top_joint" type="fixed">
+    	<parent link="side_1"/>
+    	<child link="side_1_top"/>
+    	<origin xyz="0 -0.01 0.04" rpy="3 0 0"/>
+	  </joint>
+
+    <link name="side_2_top">
+      <visual>
+        <geometry>
+            <box size="0.24 0.005 0.13" />
+        </geometry>
+      </visual>
+        
+      <collision>
+        <geometry>
+            <box size="0.24 0.005 0.13" />
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="side2_top_joint" type="fixed">
+    	<parent link="side_2"/>
+    	<child link="side_2_top"/>
+    	<origin xyz="0 0.01 0.04" rpy="-3 0 0"/>
+	  </joint>
+
+    
+    <link name="side_3_top">
+      <visual>
+        <geometry>
+            <box size="0.005 0.23 0.13" />
+        </geometry>
+      </visual>
+        
+      <collision>
+        <geometry>
+            <box size="0.005 0.023 0.13" />
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="side3_top_joint" type="fixed">
+    	<parent link="side_3"/>
+    	<child link="side_3_top"/>
+    	<origin xyz="0.0575 0 0.076" rpy="0 2 0"/>
+	  </joint>
+
+    <link name="side_4_top">
+      <visual>
+        <geometry>
+            <box size="0.005 0.23 0.13" />
+        </geometry>
+      </visual>
+        
+      <collision>
+        <geometry>
+            <box size="0.005 0.023 0.13" />
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="side4_top_joint" type="fixed">
+    	<parent link="side_4"/>
+    	<child link="side_4_top"/>
+    	<origin xyz="-0.0575 0 0.076" rpy="0 -2 0"/>
+	  </joint>
+
+
+  <gazebo reference="base_plate">
+      <material>ArucoMaterial</material>
+  </gazebo>
+</robot>
