@@ -20,7 +20,7 @@ Init workspace
 ```bash
 mkdir -p turtlebot_ws/src
 cd turtlebot_ws/src
-git clone -b turtlebot --single-branch https://github.com/SoftServeSAG/order_fullfilement_robotic_arm.git
+git clone git@github.com:SoftServeSAG/robotic_order_fulfillment_robotic_turtle.git
 ```
 
 Create docker net
@@ -31,8 +31,7 @@ sudo docker network create --driver=bridge --subnet=178.18.0.0/16 ros_net
 Build docker images
 
 ```bash
-docker pull lyubomyrd/robotics_ros2_docker
-cd order_fullfilement_robotic_arm/docker/ros2_turtlebot_ws/
+robotic_order_fulfillment_robotic_turtle/docker/ros2_turtlebot/
 sudo ./build.bash 
 ```
 
@@ -44,7 +43,7 @@ sudo ./run.bash
 
 Inside docker container
 ```bash
-cd ~/ws/src/order_fullfilement_robotic_arm/scripts
+cd ~/ws/src/robotic_order_fulfillment_robotic_turtle/scripts
 ./start.sh
 ```
 
