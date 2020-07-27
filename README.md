@@ -92,3 +92,8 @@ Typical command to spawn urdf model:
 ```bash
 ros2 run ros2_spawn_model_to_ros1 spawn -entity entity -file ~/deps_ws/src/turtlebot3/turtlebot3/turtlebot3_description/urdf/turtlebot3_waffle_pi.urdf -gazebo_namespace gazebo
 ```
+
+Spawn turtlebot model with top plate with aruco markers
+```bash
+ros2 run ros2_spawn_model_to_ros1 spawn -entity turtlebot -file ~/ws/src/order_fullfilement_robotic_arm/turtlebot_description/urdf/turtlebot.urdf -gazebo_namespace gazebo -x 0.7 -y -0.68 -z 0.01 -Y 1.6
+```
