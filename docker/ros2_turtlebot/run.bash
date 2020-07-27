@@ -15,11 +15,11 @@ docker run -it --rm \
     --device=/dev/dri:/dev/dri \
     --env="DISPLAY=$DISPLAY" \
     --env QT_X11_NO_MITSHM=1 \
-    --add-host simulation:178.18.0.2 \
-    --add-host turtlebot_1:178.18.0.7 \
+    --add-host simulation:178.18.0.254 \
+    --add-host turtlebot_1:178.18.0.250 \
     --hostname turtlebot_0 \
     --net ros_net \
-    --ip 178.18.0.6 \
+    --ip 178.18.0.251 \
    ros2_turtlebot_ws
 
 
