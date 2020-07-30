@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(turtlebot_description)
+project(xv2_ros2_spawn_model_to_ros1)
 
 # Default to C99
 if(NOT CMAKE_C_STANDARD)

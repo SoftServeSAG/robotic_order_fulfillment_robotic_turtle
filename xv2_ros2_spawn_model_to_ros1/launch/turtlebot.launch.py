@@ -24,7 +24,7 @@ def generate_launch_description():
             output='screen'),
 
 	ExecuteProcess(
-            cmd=['ros2', 'run', 'ros2_spawn_model_to_ros1', 'spawn'],
+            cmd=['ros2', 'run', 'xv2_ros2_spawn_model_to_ros1', 'spawn'],
             output='screen'),
 
         IncludeLaunchDescription(

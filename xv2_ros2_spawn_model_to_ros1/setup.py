@@ -1,6 +1,6 @@
 from setuptools import setup
 
-package_name = 'ros2_spawn_model_to_ros1'
+package_name = 'xv2_ros2_spawn_model_to_ros1'
 
 setup(
     name=package_name,
@@ -24,7 +24,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-	        'spawn = ros2_spawn_model_to_ros1.spawn_model:spawn'
+	        'spawn = xv2_ros2_spawn_model_to_ros1.spawn_model:spawn'
         ],
     },
 )
