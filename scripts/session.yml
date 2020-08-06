@@ -7,4 +7,4 @@ windows:
   - ros2:
       layout: even-vertical
       panes:
-        - export ROS_MASTER_URI=http://simulation:11311 && source /opt/ros/melodic/setup.bash && source /opt/ros/dashing/local_setup.bash && ros2 run ros1_bridge dynamic_bridge --bridge-all-topics
+        - export ROS_MASTER_URI=http://simulation:11311 && source /opt/ros/noetic/setup.bash && source /opt/ros/foxy/local_setup.bash && ros2 run ros1_bridge dynamic_bridge --bridge-all-topics
