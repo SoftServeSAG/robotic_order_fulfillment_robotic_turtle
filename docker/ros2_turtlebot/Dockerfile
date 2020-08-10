@@ -1,5 +1,5 @@
-# FROM lyubomyrd/robotics_ros2_docker
-FROM ros2_base
+FROM lyubomyrd/robotics_ros2_docker
+# FROM ros2_base
 
 WORKDIR /root
 
