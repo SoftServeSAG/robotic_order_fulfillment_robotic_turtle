@@ -1,4 +1,5 @@
 FROM lyubomyrd/robotics_ros2_docker
+# FROM ros2_base
 
 WORKDIR /root
 
@@ -22,7 +23,7 @@ RUN apt-get update && apt-get install -y \
     ros-$ROS_DISTRO-action-msgs \
     ros-$ROS_DISTRO-gazebo-ros-pkgs \
     ros-$ROS_DISTRO-ros1-bridge \
-    ros-melodic-desktop \
+    ros-noetic-desktop \
     && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir /var/run/sshd
