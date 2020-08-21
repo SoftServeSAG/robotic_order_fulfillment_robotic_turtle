@@ -4,6 +4,29 @@
 
 #include "../include/xv2_usb_camera/usb_cam_driver.h"
 
+/// Convert an OpenCV matrix encoding type to a string format recognized by sensor_msgs::Image.
+/**
+ * \param[in] mat_type The OpenCV encoding type.
+ * \return A string representing the encoding type.
+ */
+std::string
+mat_type2encoding(int mat_type)
+{
+    switch (mat_type) {
+        case CV_8UC1:
+            return "mono8";
+        case CV_8UC3:
+            return "bgr8";
+        case CV_16SC1:
+            return "mono16";
+        case CV_8UC4:
+            return "rgba8";
+        default:
+            throw std::runtime_error("Unsupported encoding type");
+    }
+}
+
+
 /// Convert an OpenCV matrix (cv::Mat) to a ROS Image message.
 /**
  * \param[in] frame The OpenCV matrix/image to convert.
@@ -31,8 +54,8 @@ int main(int argc, char * argv[])
     auto node = rclcpp::Node::make_shared("usb_cam_driver");
     rclcpp::Logger node_logger = node->get_logger();
 
-    int width = 320;
-    int height = 240;
+    int width = 1080;
+    int height = 720;
 
     double freq = 30.0;
     // Set a loop rate for our main event loop.
@@ -45,10 +68,9 @@ int main(int argc, char * argv[])
 
     RCLCPP_INFO(node_logger, "Publishing data on topic '%s'", topic.c_str());
 
-    auto pub = node->create_publisher<sensor_msgs::msg::Image>(
-            topic, custom_camera_qos_profile);
+    auto pub = node->create_publisher<sensor_msgs::msg::Image>(topic, 10);
 
-    cv2::VideoCapture cap;
+    cv::VideoCapture cap;
 
     cap.open(2);
 //    RCLCPP_WARN(node_logger, "CamInfo: %s", cap.getBackendName());
@@ -56,8 +78,18 @@ int main(int argc, char * argv[])
 
 
     // Set the width and height based on command line arguments.
-    cap.set(CV_CAP_PROP_FRAME_WIDTH, static_cast<double>(width));
-    cap.set(CV_CAP_PROP_FRAME_HEIGHT, static_cast<double>(height));
+    cap.set(cv::CAP_PROP_FRAME_WIDTH, static_cast<double>(width));
+    cap.set(cv::CAP_PROP_FRAME_HEIGHT, static_cast<double>(height));
+    cap.set(cv::CAP_PROP_MODE, 9);
+    cap.set(cv::CAP_PROP_BRIGHTNESS, 0.55);
+    cap.set(cv::CAP_PROP_CONTRAST, 0.1);
+    cap.set(cv::CAP_PROP_SATURATION, 0.2);
+    cap.set(cv::CAP_PROP_HUE, 1.0);
+    cap.set(cv::CAP_PROP_GAIN, 0.1);
+    cap.set(cv::CAP_PROP_EXPOSURE, -10000.0);
+
+
+
     if (!cap.isOpened()) {
         RCLCPP_ERROR(node_logger, "Could not open video stream");
         return 1;
@@ -82,16 +114,16 @@ int main(int argc, char * argv[])
     if (show_camera) {
         // NOTE(esteve): Use C version of cvShowImage to avoid this on Windows:
         // http://stackoverflow.com/questions/20854682/opencv-multiple-unwanted-window-with-garbage-name
-        CvMat cvframe = frame;
+//        cv::Mat cvframe = frame;
         // Show the image in a window called "cam2image".
-        cvShowImage("cam2image", &cvframe);
+//        cv::imshow("cam2image", frame);
         // Draw the image to the screen and wait 1 millisecond.
-        cv::waitKey(1);
+//        cv::waitKey(1);
     }
 
         // Publish the image message and increment the frame_id.
         RCLCPP_INFO(node_logger, "Publishing image #%zd", i);
-        pub->publish(msg);
+        pub->publish(*msg);
         ++i;
 
 // Do some work in rclcpp and wait for more to come in.

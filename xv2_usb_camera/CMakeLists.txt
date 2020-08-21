@@ -27,8 +27,6 @@ find_package(OpenCV REQUIRED)
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
 
-
-
 add_executable(usb_cam_driver src/usb_cam_driver.cpp)
 ament_target_dependencies(usb_cam_driver
         "rclcpp"

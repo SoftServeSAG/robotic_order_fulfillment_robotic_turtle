@@ -9,18 +9,18 @@ from launch.substitutions import LaunchConfiguration
 
 def generate_launch_description():
     use_sim_time = LaunchConfiguration('use_sim_time', default='true')
-    robot_name = 'xv2_description'
-    world_file_name = 'empty.world'
+    robot_name = 'waffle'
+    # world_file_name = 'empty.world'
 
-    world = os.path.join(get_package_share_directory(robot_name), 'worlds', world_file_name)
+    # world = os.path.join(get_package_share_directory(robot_name), 'worlds', world_file_name)
 
-    urdf = os.path.join(get_package_share_directory(robot_name), 'urdf', 'xv2_turtle.urdf')
+    urdf = os.path.join(get_package_share_directory(turtlebot3_description), 'urdf', '/root/deps_ws/src/turtlebot3/turtlebot3/turtlebot3_description/urdf/turtlebot3_waffle.urdf')
 
     xml = open(urdf, 'r').read()
 
     xml = xml.replace('"', '\\"')
 
-    swpan_args = '{name: \"xv2_turtle\", xml: \"'  +  xml + '\" }'
+    swpan_args = '{name: \"my_robot\", xml: \"'  +  xml + '\" }'
 
     return LaunchDescription([
         # ExecuteProcess(
@@ -35,4 +35,3 @@ def generate_launch_description():
             cmd=['ros2', 'service', 'call', '/spawn_entity', 'gazebo_msgs/SpawnEntity', swpan_args],
             output='screen'),
     ])
-

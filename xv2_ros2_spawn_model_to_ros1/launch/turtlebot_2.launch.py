@@ -61,11 +61,11 @@ def generate_launch_description():
             name='spawn_entity',
             parameters=[
                       {'entity': 'waffle'},
-                      # {'file': '/root/deps_ws/src/turtlebot3/turtlebot3/turtlebot3_description/urdf/turtlebot3_waffle.urdf'},
-                      {'file': '/root/ws/src/robotic_order_fulfillment_robotic_turtle/xv2_description/urdf/xv2_turtle.urdf'},
+                      {'file': '/root/deps_ws/src/turtlebot3/turtlebot3/turtlebot3_description/urdf/turtlebot3_waffle.urdf'},
+                      # {'file': '/root/ws/src/robotic_order_fulfillment_robotic_turtle/xv2_description/urdf/xv2_turtle.urdf'},
                       {'gazebo_namespace': '/gazebo'},
-                      {'x': 0.0},
-                      {'y': 0.65},
+                      {'x': 5},
+                      {'y': 0},
                       {'z': 0.0},
                   ]),
     ])

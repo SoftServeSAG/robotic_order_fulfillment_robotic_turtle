@@ -17,9 +17,44 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(std_msgs REQUIRED)
+find_package(sensor_msgs REQUIRED)
+find_package(std_msgs REQUIRED)
+find_package(cv_bridge REQUIRED)
+find_package(image_transport REQUIRED)
+
+find_package(OpenCV REQUIRED)
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
+
+add_executable(barcode src/barcode_detect.cpp src/barcode_read.cpp)
+ament_target_dependencies(barcode
+        "rclcpp"
+        "sensor_msgs"
+        "std_msgs"
+        "OpenCV"
+        "cv_bridge"
+        "image_transport")
+target_include_directories(barcode
+        PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include>)
+
+
+install(TARGETS
+        barcode
+        DESTINATION lib/${PROJECT_NAME})
+
+install(DIRECTORY
+        launch
+        DESTINATION share/${PROJECT_NAME})
+
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(ZBar REQUIRED IMPORTED_TARGET zbar)
+
+target_link_libraries(barcode PkgConfig::ZBar)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
