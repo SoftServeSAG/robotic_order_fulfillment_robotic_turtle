@@ -14,7 +14,7 @@ def generate_launch_description():
 
     world = os.path.join(get_package_share_directory(robot_name), 'worlds', world_file_name)
 
-    urdf = os.path.join(get_package_share_directory(robot_name), 'urdf', 'xv2_turtle.urdf')
+    urdf = os.path.join(get_package_share_directory(robot_name), 'xacro', 'fake_turtle.urdf.xacro')
 
     xml = open(urdf, 'r').read()
 
