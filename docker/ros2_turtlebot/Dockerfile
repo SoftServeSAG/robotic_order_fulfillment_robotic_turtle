@@ -38,7 +38,13 @@ RUN mkdir -p ~/deps_ws/src && \
     cd ~/deps_ws && \
     wget https://raw.githubusercontent.com/ROBOTIS-GIT/turtlebot3/ros2/turtlebot3.repos && \
     vcs import src < turtlebot3.repos && \
-    . /opt/ros/$ROS_DISTRO/setup.sh &&\
+#hack for using turtlebot urdf model for ROS1
+    cd ~/deps_ws/src/turtlebot3 && \
+    rm -r ./turtlebot3 && \
+    git clone -b ros2 --single-branch https://github.com/yfedi/turtlebot3.git && \
+    cd ~/deps_ws/src &&\
+#end of hack
+    . /opt/ros/$ROS_DISTRO/setup.sh && \
     colcon build --symlink-install
 
 RUN echo "PS1='\[\e[33m\][MrTurtle]\[\e[m\] ${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '" >> ~/.bashrc
