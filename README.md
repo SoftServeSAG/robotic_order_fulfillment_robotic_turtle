@@ -58,6 +58,7 @@ usage: spawn [-h] -file FILE_NAME -entity ENTITY_NAME
              [-robot_namespace ROBOT_NAMESPACE] [-unpause] [-sdf]
              [-x X] [-y Y] [-z Z] [-R R] [-P P] [-Y Y]
 
+```bash
 Spawn an entity in gazebo. Gazebo must be started with gazebo_ros_init,
 gazebo_ros_factory and gazebo_ros_state for all functionalities to work
   -h, --help            show this help message and exit
@@ -81,7 +82,7 @@ gazebo_ros_factory and gazebo_ros_state for all functionalities to work
   -R R                  roll angle of initial orientation, radians
   -P P                  pitch angle of initial orientation, radians
   -Y Y                  yaw angle of initial orientation, radians
-
+```
 
 Typical command to spawn sdf model:
 ```bash
@@ -90,7 +91,7 @@ ros2 run ros2_spawn_model_to_ros1 spawn -entity entity -file ~/deps_ws/src/turtl
 
 Typical command to spawn urdf model:
 ```bash
-ros2 run ros2_spawn_model_to_ros1 spawn -entity entity -file ~/deps_ws/src/turtlebot3/turtlebot3/turtlebot3_description/urdf/turtlebot3_waffle_pi.urdf -gazebo_namespace gazebo
+ros2 run ros2_spawn_model_to_ros1 spawn -entity entity -file ~/deps_ws/src/turtlebot3/turtlebot3/turtlebot3_description_ros1/urdf/turtlebot3_waffle_pi.urdf -gazebo_namespace gazebo
 ```
 
 Spawn turtlebot model with top plate with aruco markers
