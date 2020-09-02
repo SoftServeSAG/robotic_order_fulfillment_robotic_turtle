@@ -20,9 +20,11 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(sensor_msgs REQUIRED)
-find_package(std_msgs REQUIRED)
+#find_package(std_msgs REQUIRED)
 find_package(cv_bridge REQUIRED)
 find_package(image_transport REQUIRED)
+find_package(xv2_msgs REQUIRED)
+find_package(std_srvs REQUIRED)
 
 find_package(OpenCV REQUIRED)
 # uncomment the following section in order to fill in
@@ -36,7 +38,11 @@ ament_target_dependencies(barcode
         "std_msgs"
         "OpenCV"
         "cv_bridge"
-        "image_transport")
+        "image_transport"
+        "xv2_msgs"
+        "std_srvs"
+#        "sensor_srvs"
+        )
 target_include_directories(barcode
         PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -66,5 +72,7 @@ if(BUILD_TESTING)
   #set(ament_cmake_cpplint_FOUND TRUE)
   ament_lint_auto_find_test_dependencies()
 endif()
+
+
 
 ament_package()

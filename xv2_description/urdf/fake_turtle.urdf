@@ -435,7 +435,7 @@
                   <emissive>0 1 0 1</emissive>
               </material>
           </visual>
-          <light name="lamp/light_source1" type='directional'>
+          <light name="lamp/light_source1" type='spot'>
           </light>
           <plugin name='light_control' filename='libFlashLightPlugin.so'>
               <enable>true</enable>
@@ -443,7 +443,7 @@
                   <id>lamp/light_source1</id>
                   <duration>0.3</duration>
                   <interval>0</interval>
-                  <color>0.1 1 0.1</color>
+                  <color>1 1 1</color>
                   <enable>true</enable>
               </light>
           </plugin>
@@ -472,8 +472,8 @@
                      </distortion>-->
                   <horizontal_fov>1.3962634</horizontal_fov>
                   <image>
-                      <width>800</width>
-                      <height>800</height>
+                      <width>1920</width>
+                      <height>1080</height>
                       <format>R8G8B8</format>
                   </image>
                   <clip>

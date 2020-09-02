@@ -19,6 +19,8 @@ typedef struct
     vector <Point> location;
 } decodedObject;
 
+
+
 void decode(Mat im, vector<decodedObject>&decodedObjects);
 void display(Mat im, vector<decodedObject>&decodedObjects);
 
