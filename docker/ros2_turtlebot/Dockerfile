@@ -23,6 +23,8 @@ RUN apt-get update && apt-get install -y \
     ros-$ROS_DISTRO-gazebo-ros-pkgs \
     ros-$ROS_DISTRO-ros1-bridge \
     ros-melodic-desktop \
+    libzbar-dev \
+    libzbar0 \
     && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir /var/run/sshd
