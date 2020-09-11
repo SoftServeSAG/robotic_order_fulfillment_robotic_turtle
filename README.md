@@ -21,6 +21,7 @@ Init workspace
 mkdir -p turtlebot_ws/src
 cd turtlebot_ws/src
 git clone git@github.com:SoftServeSAG/robotic_order_fulfillment_robotic_turtle.git
+git clone -b foxy --single-branch https://github.com/ros2/ros1_bridge.git
 ```
 
 Create docker net
@@ -45,6 +46,26 @@ Inside docker container
 ```bash
 cd ~/ws/src/robotic_order_fulfillment_robotic_turtle/scripts
 ./start.sh
+```
+
+## Build ros1_bridge from sources
+Inside docker container
+```bash
+cd ~/ws
+colcon build --symlink-install --packages-skip ros1_bridge
+source /opt/ros/noetic/setup.bash
+. ~/deps_ws/install/local_setup.bash
+colcon build --symlink-install --packages-select ros1_bridge --cmake-force-configure
+```
+
+Now we need to source folder where ros1_bridge is located
+```bash
+. ~/ws/install/local_setup.bash
+```
+
+Check if ros1_bridge has been built correctly and with all needed messages
+```bash
+ros2 run ros1_bridge dynamic_bridge --print-pairs
 ```
 
 

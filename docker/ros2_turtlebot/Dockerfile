@@ -1,5 +1,4 @@
-FROM lyubomyrd/robotics_ros2_docker
-# FROM ros2_base
+FROM lyubomyrd/robotics_ros2_docker:latest
 
 WORKDIR /root
 
@@ -16,17 +15,20 @@ RUN apt-get update && apt-get install -y \
     gdb \
     gdbserver \
     python3-vcstool \
-    ros-$ROS_DISTRO-cartographer \
-    ros-$ROS_DISTRO-cartographer-ros \
-    ros-$ROS_DISTRO-navigation2 \
-    ros-$ROS_DISTRO-nav2-bringup \
+    #ros-$ROS_DISTRO-cartographer \
+    #ros-$ROS_DISTRO-cartographer-ros \
+    #ros-$ROS_DISTRO-navigation2 \
+    #ros-$ROS_DISTRO-nav2-bringup \
     ros-$ROS_DISTRO-action-msgs \
+    ros-$ROS_DISTRO-gazebo-msgs\
     ros-$ROS_DISTRO-gazebo-ros-pkgs \
-    ros-$ROS_DISTRO-ros1-bridge \
+    ros-$ROS_DISTRO-ros1-bridge\
     ros-noetic-desktop \
     libzbar-dev \
     libzbar0 \
     && rm -rf /var/lib/apt/lists/*
+
+RUN apt-get update && apt-get upgrade -y
 
 RUN mkdir /var/run/sshd
 RUN echo 'root:root' | chpasswd
@@ -35,7 +37,6 @@ RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so
 
 RUN echo "source /opt/ros/$ROS_DISTRO/setup.bash" >> ~/.bashrc
 
- 
 RUN mkdir -p ~/deps_ws/src && \
     cd ~/deps_ws && \
     wget https://raw.githubusercontent.com/ROBOTIS-GIT/turtlebot3/ros2/turtlebot3.repos && \
@@ -44,13 +45,14 @@ RUN mkdir -p ~/deps_ws/src && \
     cd ~/deps_ws/src/turtlebot3 && \
     rm -r ./turtlebot3 && \
     git clone -b ros2 --single-branch https://github.com/yfedi/turtlebot3.git && \
-    cd ~/deps_ws/src &&\
+    cd ~/deps_ws &&\
 #end of hack
     . /opt/ros/$ROS_DISTRO/setup.sh && \
     colcon build --symlink-install
 
 RUN echo "PS1='\[\e[33m\][MrTurtle]\[\e[m\] ${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '" >> ~/.bashrc
 
-RUN echo "source ~/deps_ws/install/setup.bash" >> ~/.bashrc
+RUN echo "source ~/deps_ws/install/local_setup.bash" >> ~/.bashrc
+RUN echo "source ~/ws/install/setup.bash" >> ~/.bashrc
 RUN echo 'export ROS_DOMAIN_ID=30 #TURTLEBOT3' >> ~/.bashrc
 RUN echo "export XV_NAME=turtlebot_0" >> ~/.bashrc
