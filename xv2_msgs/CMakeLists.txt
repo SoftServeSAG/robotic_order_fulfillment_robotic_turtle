@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(turtlebot_description)
+project(xv2_msgs)
 
 # Default to C99
 if(NOT CMAKE_C_STANDARD)
@@ -16,10 +16,17 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 endif()
 
 # find dependencies
+find_package(rosidl_default_generators REQUIRED)
 find_package(ament_cmake REQUIRED)
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
+
+rosidl_generate_interfaces(${PROJECT_NAME}
+        "srv/BarcodeDetect.srv"
+        )
+
+ament_export_dependencies(rosidl_default_runtime)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
