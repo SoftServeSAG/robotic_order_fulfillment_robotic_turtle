@@ -15,7 +15,7 @@ sudo systemctl restart docker
 ```
 
 
-Init workspace
+### Init workspace
 
 ```bash
 mkdir -p turtlebot_ws/src
@@ -42,30 +42,27 @@ Run docker container
 sudo ./run.bash
 ```
 
-Inside docker container
-```bash
-cd ~/ws/src/robotic_order_fulfillment_robotic_turtle/scripts
-./start.sh
-```
+Inside docker container build available packages
 
-## Build ros1_bridge from sources
-Inside docker container
 ```bash
 cd ~/ws
 colcon build --symlink-install --packages-skip ros1_bridge
 source /opt/ros/noetic/setup.bash
 . ~/ws/install/local_setup.bash
 colcon build --symlink-install --packages-select ros1_bridge --cmake-force-configure --cmake-clean-first --cmake-clean-cache
-```
-
-Now we need to source folder where ros1_bridge is located
-```bash
 . ~/ws/install/local_setup.bash
 ```
 
 Check if ros1_bridge has been built correctly and with all needed messages
 ```bash
 ros2 run ros1_bridge dynamic_bridge --print-pairs
+```
+
+
+### Run 
+```bash
+cd ~/ws/src/robotic_order_fulfillment_robotic_turtle/scripts
+./start.sh
 ```
 
 

@@ -4,7 +4,12 @@ root: ./
 startup_window: status
 pre_window: export XV_NAME=turtlebot_0
 windows:
-  - ros2:
+  - ros1_bridge:
       layout: even-vertical
       panes:
         - export ROS_MASTER_URI=http://simulation:11311 && source /opt/ros/noetic/setup.bash && source /opt/ros/foxy/local_setup.bash && ros2 run ros1_bridge dynamic_bridge --bridge-all-topics
+  - ros2_ws:
+      layout: even-vertical
+      panes:
+        - cd ~/ws
+  
