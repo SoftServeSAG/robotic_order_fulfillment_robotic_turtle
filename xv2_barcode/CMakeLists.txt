@@ -23,7 +23,7 @@ find_package(sensor_msgs REQUIRED)
 #find_package(std_msgs REQUIRED)
 find_package(cv_bridge REQUIRED)
 find_package(image_transport REQUIRED)
-find_package(xv2_msgs REQUIRED)
+find_package(bridge_msgs REQUIRED)
 find_package(std_srvs REQUIRED)
 
 find_package(OpenCV REQUIRED)
@@ -39,7 +39,7 @@ ament_target_dependencies(barcode
         "OpenCV"
         "cv_bridge"
         "image_transport"
-        "xv2_msgs"
+        "bridge_msgs"
         "std_srvs"
 #        "sensor_srvs"
         )

@@ -16,7 +16,7 @@
 #include "sensor_msgs/msg/image.hpp"
 #include "sensor_msgs/image_encodings.hpp"
 #include <opencv2/photo.hpp>
-#include "xv2_msgs/srv/barcode_detect.hpp"
+#include "bridge_msgs/srv/barcode_detect.hpp"
 //#include "std_srvs/srv/trigger.hpp"
 #include <thread>
 
@@ -26,6 +26,7 @@ rclcpp::Node::SharedPtr node = nullptr;
 bool is_barcode_detected = false;
 bool detect_barcode = false;
 std::string detected_barcode = "";
+vector<decodedObject> decodedObjects;
 
 std::chrono::duration<double> max_detect_time = static_cast<std::chrono::duration<double>>(30); //seconds
 

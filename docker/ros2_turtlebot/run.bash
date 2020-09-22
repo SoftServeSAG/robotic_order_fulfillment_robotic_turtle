@@ -14,6 +14,8 @@ docker run -it --rm \
     -v /dev/bus/usb:/dev/bus/usb \
     --env="DISPLAY=$DISPLAY" \
     --env QT_X11_NO_MITSHM=1 \
+    --add-host hand_0:178.18.0.253 \
+    --add-host hand_1:178.18.0.252 \
     --add-host simulation:178.18.0.254 \
     --add-host turtlebot_1:178.18.0.250 \
     --hostname turtlebot_0 \

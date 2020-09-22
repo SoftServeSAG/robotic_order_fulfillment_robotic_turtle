@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(xv2_msgs)
+project(bridge_msgs)
 
 # Default to C99
 if(NOT CMAKE_C_STANDARD)
@@ -38,5 +38,7 @@ if(BUILD_TESTING)
   #set(ament_cmake_cpplint_FOUND TRUE)
   ament_lint_auto_find_test_dependencies()
 endif()
+
+#install(FILES xv2_mapping_rules.yaml DESTINATION share/${PROJECT_NAME})
 
 ament_package()

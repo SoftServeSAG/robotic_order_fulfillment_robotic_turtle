@@ -24,10 +24,10 @@ private:
 
 
     {
-        RCLCPP_INFO(this->get_logger(), "I am here");
-//        if (!detect_barcode)
-//            return;
 
+        if (!detect_barcode)
+            return;
+//        RCLCPP_INFO(this->get_logger(), "I am here");
 //        std::vector<std::string> encodings = getEncodings();
 //        std::string dst_encoding = encodings[0];
 
@@ -49,12 +49,12 @@ private:
 //            cv::circle(cv_ptr->image, cv::Point(50, 50), 10, CV_RGB(255,0,0));
 //
 //        // Update GUI Window
-        cv::imshow("circle window", cv_ptr->image);
-        cv::waitKey(1);
+//        cv::imshow("circle window", cv_ptr->image);
+//        cv::waitKey(1);
 
 //        RCLCPP_INFO(this->get_logger(), "I heard: '%s'", /*msg->data.c_str()*/"Image");
         // Variable for decoded objects
-        vector<decodedObject> decodedObjects;
+
 
         cv::Mat gray;
 //        cv::detailEnhance 	(cv_ptr->image, cv_ptr->image, /*sigma_s = */200.0f, /*sigma_r = */0.05f);
@@ -116,7 +116,8 @@ private:
         // Find and decode barcodes and QR codes
         decode(cv_ptr->image, decodedObjects);
 
-        RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Quantity detected:%d", sizeof(decodedObjects)/sizeof(decodedObjects[0]));
+        if (decodedObjects.size() == 1)
+            is_barcode_detected = true;
         // Display location
 //        display(cv_ptr->image, decodedObjects);
     }
@@ -169,11 +170,12 @@ void handle_service(
         const std::shared_ptr<xv2_msgs::srv::BarcodeDetect::Request> request,
         const std::shared_ptr<xv2_msgs::srv::BarcodeDetect::Response> response)
 {
+    is_barcode_detected = false;
     response->success = false;
     (void)request_header;
     RCLCPP_INFO(
             node->get_logger(),
-            "request: %ld", request->barcode_input);
+            "request: %s", request->barcode_input.c_str());
     detect_barcode = true;
 //    ros::Time now = ros::Time::now().seconds;
     auto start = std::chrono::steady_clock::now();
@@ -188,7 +190,7 @@ void handle_service(
     {
         response->message = "Success";
     }
-    response->detected_barcode = ((request->barcode_input.compare(detected_barcode)) == 0);
+    response->detected_barcode = (((request->barcode_input).compare(decodedObjects.at(0).data)) == 0);
     response->success = true;
     detect_barcode = false;
 }

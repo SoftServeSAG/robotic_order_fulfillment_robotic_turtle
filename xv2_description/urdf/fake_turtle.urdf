@@ -391,14 +391,14 @@
       </visual>
       <collision>
         <geometry>
-          <box size="0.05 0.05 0.00001s" />
+          <box size="0.05 0.010 0.00001" />
         </geometry>
        </collision>
       </link>
   <joint name="light_joint" type="fixed">
     <parent link="camera_link"/>
         <child link="lamp"/>
-         <origin xyz="0.0 0.0 0.0" rpy="0 1.57 0"/>
+         <origin xyz="0.0 0.0 0.0" rpy="1.57 0 0"/>
   </joint>
 
 <!--
@@ -426,8 +426,9 @@
           <material>ArucoMaterial</material>
       </gazebo>
 
+     <!-- <gazebo reference="lamp"> -->
       <gazebo reference="lamp">
-          <visual>
+          <!--<visual>
               <material>
                   <ambient>0 0 0 1</ambient>
                   <diffuse>0 0 0 1</diffuse>
@@ -435,9 +436,20 @@
                   <emissive>0 1 0 1</emissive>
               </material>
           </visual>
+          -->
           <light name="lamp/light_source1" type='spot'>
+                <pose>0.14 0.14 0.7 -1.57 0.0 -0.78</pose>
+                <diffuse>1 1 1 1</diffuse>
+                <specular>.1 .1 .1 1</specular>
+                <attenuation>
+                  <range>20</range>
+                  <linear>0.87</linear>
+                  <constant>0.9</constant>
+                  <quadratic>0.01</quadratic>
+                </attenuation>
+                <cast_shadows>true</cast_shadows>
           </light>
-          <plugin name='light_control' filename='libFlashLightPlugin.so'>
+          <plugin name='light_source1' filename='libFlashLightPlugin.so'>
               <enable>true</enable>
               <light>
                   <id>lamp/light_source1</id>
