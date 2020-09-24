@@ -20,7 +20,7 @@
 //#include "std_srvs/srv/trigger.hpp"
 #include <thread>
 
-rclcpp::Service<xv2_msgs::srv::BarcodeDetect>::SharedPtr is_detected_srv_;
+rclcpp::Service<bridge_msgs::srv::BarcodeDetect>::SharedPtr is_detected_srv_;
 rclcpp::Node::SharedPtr node = nullptr;
 
 bool is_barcode_detected = false;
@@ -28,7 +28,7 @@ bool detect_barcode = false;
 std::string detected_barcode = "";
 vector<decodedObject> decodedObjects;
 
-std::chrono::duration<double> max_detect_time = static_cast<std::chrono::duration<double>>(30); //seconds
+std::chrono::duration<double> max_detect_time = static_cast<std::chrono::duration<double>>(10); //seconds
 
 
 //void do_detect(const std::shared_ptr<rmw_request_id_t>/*request_header*/,
@@ -37,7 +37,7 @@ std::chrono::duration<double> max_detect_time = static_cast<std::chrono::duratio
 
 void handle_service(
         const std::shared_ptr<rmw_request_id_t> request_header,
-        const std::shared_ptr<xv2_msgs::srv::BarcodeDetect::Request> request,
-        const std::shared_ptr<xv2_msgs::srv::BarcodeDetect::Response> response);
+        const std::shared_ptr<bridge_msgs::srv::BarcodeDetect::Request> request,
+        const std::shared_ptr<bridge_msgs::srv::BarcodeDetect::Response> response);
 
 #endif //ROBOTIC_ORDER_FULFILLMENT_ROBOTIC_TURTLE_BARCODE_READ_H
