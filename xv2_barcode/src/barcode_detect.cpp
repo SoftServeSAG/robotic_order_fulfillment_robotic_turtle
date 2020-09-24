@@ -41,10 +41,12 @@ void decode(Mat im, vector<decodedObject>&decodedObjects)
         for(int i = 0; i< symbol->get_location_size(); i++)
         {
             obj.location.push_back(Point(symbol->get_location_x(i),symbol->get_location_y(i)));
+            cout << "i" << i;
         }
 
         decodedObjects.push_back(obj);
     }
+    cout << "done here ";
 }
 
 // Display barcode and QR code location

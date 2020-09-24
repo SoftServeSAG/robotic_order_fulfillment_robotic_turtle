@@ -114,12 +114,14 @@ private:
 //        cv::waitKey(1);
 
         // Find and decode barcodes and QR codes
+        decodedObjects.clear();
         decode(cv_ptr->image, decodedObjects);
 
         if (decodedObjects.size() == 1)
             is_barcode_detected = true;
         // Display location
 //        display(cv_ptr->image, decodedObjects);
+        RCLCPP_INFO(this->get_logger(), "Finished cycle %d ", is_barcode_detected);
     }
     rclcpp::Subscription<sensor_msgs::msg::Image>::SharedPtr subscription_;
 
@@ -139,7 +141,7 @@ int main(int argc, char * argv[])
 //            node->create_service<std_srvs::srv::Trigger>("barcode_detect/is_detected",
 //                                                         std::bind(&do_detect, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
 
-    auto servernode = node->create_service<xv2_msgs::srv::BarcodeDetect>("barcode_detect", handle_service);
+    auto servernode = node->create_service<bridge_msgs::srv::BarcodeDetect>("barcode_detect", handle_service);
 
 //    is_detected_srv_ = create_service<std_srvs::srv::Trigger>("lifecycle_manager/is_detected",
 //                                                            std::bind(&LifecycleManager::isActiveCallback, this, _1, _2, _3));
@@ -167,11 +169,12 @@ int main(int argc, char * argv[])
 
 void handle_service(
         const std::shared_ptr<rmw_request_id_t> request_header,
-        const std::shared_ptr<xv2_msgs::srv::BarcodeDetect::Request> request,
-        const std::shared_ptr<xv2_msgs::srv::BarcodeDetect::Response> response)
+        const std::shared_ptr<bridge_msgs::srv::BarcodeDetect::Request> request,
+        const std::shared_ptr<bridge_msgs::srv::BarcodeDetect::Response> response)
 {
     is_barcode_detected = false;
     response->success = false;
+    response->detected_barcode = false;
     (void)request_header;
     RCLCPP_INFO(
             node->get_logger(),
@@ -189,10 +192,14 @@ void handle_service(
     if (is_barcode_detected)
     {
         response->message = "Success";
+        response->detected_barcode = (((request->barcode_input).compare(decodedObjects.at(0).data)) == 0);
     }
-    response->detected_barcode = (((request->barcode_input).compare(decodedObjects.at(0).data)) == 0);
-    response->success = true;
     detect_barcode = false;
+    RCLCPP_INFO(
+            node->get_logger(),
+            "Request completed");
+    response->success = true;
+
 }
 
 //

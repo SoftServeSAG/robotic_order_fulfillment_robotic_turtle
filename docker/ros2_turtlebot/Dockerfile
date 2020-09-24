@@ -74,6 +74,6 @@ RUN echo "PS1='\[\e[33m\][MrTurtle]\[\e[m\] ${debian_chroot:+($debian_chroot)}\[
 # link ~/deps_ws/src/ to ~/ws/src folder
 RUN echo "ln -sf ~/deps_ws/src/* ~/ws/src/" >> ~/.bashrc
 
-RUN echo "source ~/ws/install/setup.bash" >> ~/.bashrc
+RUN echo "source ~/ws/install/local_setup.bash" >> ~/.bashrc
 RUN echo 'export ROS_DOMAIN_ID=30 #TURTLEBOT3' >> ~/.bashrc
 RUN echo "export XV_NAME=turtlebot_0" >> ~/.bashrc

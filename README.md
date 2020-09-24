@@ -57,7 +57,7 @@ colcon build --symlink-install --packages-skip ros1_bridge
 . /opt/ros/foxy/setup.bash
 . ~/ros1_ws/install_isolated/setup.bash
 . ~/ws/install/local_setup.bash
-colcon build --packages-select ros1_bridge --cmake-force-configure
+colcon build --packages-select ros1_bridge --cmake-force-configure  --cmake-clean-cache --cmake-clean-first
 . install/setup.sh
 . install/local_setup.sh
 ```
