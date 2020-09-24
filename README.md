@@ -53,9 +53,13 @@ Inside docker container
 ```bash
 cd ~/ws
 colcon build --symlink-install --packages-skip ros1_bridge
-source /opt/ros/noetic/setup.bash
+. /opt/ros/noetic/setup.bash
+. /opt/ros/foxy/setup.bash
+. ~/ros1_ws/install_isolated/setup.bash
 . ~/ws/install/local_setup.bash
-colcon build --symlink-install --packages-select ros1_bridge --cmake-force-configure --cmake-clean-first --cmake-clean-cache
+colcon build --packages-select ros1_bridge --cmake-force-configure
+. install/setup.sh
+. install/local_setup.sh
 ```
 
 Now we need to source folder where ros1_bridge is located

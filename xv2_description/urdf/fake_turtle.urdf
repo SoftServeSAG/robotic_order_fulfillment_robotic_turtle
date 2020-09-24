@@ -1,0 +1,529 @@
+<?xml version="1.0"?>
+<robot name="simple_box">
+
+    <material name="blue">
+        <color rgba= "0 0 1 1"/>
+    </material>
+
+    <material name="grey">
+        <color rgba="0.75 0.75 0.75 1"/>
+    </material>
+
+    <!-- Turtlebot description -->
+    <link name="fake_turtlebot">
+        <inertial>
+            <mass value="1.0" />
+            <inertia  ixx="1.0" ixy="0.0"  ixz="0.0"  iyy="100.0"  iyz="0.0"  izz="1.0" />
+        </inertial>
+
+        <visual>
+            <geometry>
+                <box size="0.3 0.3 0.2" />
+            </geometry>
+        </visual>
+
+        <collision>
+            <geometry>
+                <box size="0.3 0.3 0.2" />
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="stand_fr">
+        <inertial>
+            <mass value="0.01" />
+            <inertia  ixx="1.0" ixy="0.0"  ixz="0.0"  iyy="100.0"  iyz="0.0"  izz="1.0" />
+        </inertial>
+
+        <visual>
+            <geometry>
+                <box size="0.003 0.003 0.3" />
+            </geometry>
+        </visual>
+
+        <collision>
+            <geometry>
+                <box size="0.003 0.003 0.3" />
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="base_standfr_joint" type="fixed">
+        	<parent link="fake_turtlebot"/>
+        	<child link="stand_fr"/>
+        	<origin xyz="0.15 0.15 0.25" rpy="0 0 0"/>
+    </joint>
+
+    <link name="stand_fl">
+      <inertial>
+          <mass value="0.01" />
+          <inertia  ixx="1.0" ixy="0.0"  ixz="0.0"  iyy="100.0"  iyz="0.0"  izz="1.0" />
+      </inertial>
+
+      <visual>
+          <geometry>
+              <box size="0.003 0.003 0.3" />
+          </geometry>
+      </visual>
+
+      <collision>
+          <geometry>
+              <box size="0.003 0.003 0.3" />
+          </geometry>
+      </collision>
+    </link>
+
+    <joint name="base_standfl_joint" type="fixed">
+        <parent link="fake_turtlebot"/>
+        <child link="stand_fl"/>
+        <origin xyz="0.15 -0.15 0.25" rpy="0 0 0"/>
+    </joint>
+
+
+    <link name="stand_rl">
+        <inertial>
+            <mass value="0.01" />
+            <inertia  ixx="1.0" ixy="0.0"  ixz="0.0"  iyy="100.0"  iyz="0.0"  izz="1.0" />
+        </inertial>
+
+        <visual>
+            <geometry>
+                <box size="0.003 0.003 0.3" />
+            </geometry>
+        </visual>
+
+        <collision>
+            <geometry>
+                <box size="0.003 0.003 0.3" />
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="base_standrl_joint" type="fixed">
+            <parent link="fake_turtlebot"/>
+            <child link="stand_rl"/>
+            <origin xyz="-0.15 0.15 0.25" rpy="0 0 0"/>
+    </joint>
+
+    <link name="stand_rr">
+        <inertial>
+            <mass value="0.01" />
+            <inertia  ixx="1.0" ixy="0.0"  ixz="0.0"  iyy="100.0"  iyz="0.0"  izz="1.0" />
+        </inertial>
+
+        <visual>
+            <geometry>
+                <box size="0.003 0.003 0.3" />
+            </geometry>
+        </visual>
+
+        <collision>
+            <geometry>
+                <box size="0.003 0.003 0.3" />
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="base_standrr_joint" type="fixed">
+            <parent link="fake_turtlebot"/>
+            <child link="stand_rr"/>
+            <origin xyz="-0.15 -0.15 0.25" rpy="0 0 0"/>
+    </joint>
+
+ <!-- Plate on turtlebot top description -->
+    <link name="base_plate">
+      <inertial>
+        <mass value="1.0" />
+        <inertia  ixx="1.0" ixy="0.0"  ixz="0.0"  iyy="100.0"  iyz="0.0"  izz="1.0" />
+      </inertial>
+
+        <visual>
+        <geometry>
+          <box size="0.5 0.5 0.02" />
+        </geometry>
+      </visual>
+
+      <collision>
+        <geometry>
+          <box size="0.5 0.5 0.02" />
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="stand_plate_joint" type="fixed">
+    	<parent link="stand_fr"/>
+    	<child link="base_plate"/>
+    	<origin xyz="-0.15 -0.15 0.15" rpy="0 0 0"/>
+	  </joint>
+
+      <!-- Box description -->
+        <link name="base_link">
+          <inertial>
+            <mass value="1.0" />
+            <inertia  ixx="1.0" ixy="0.0"  ixz="0.0"  iyy="100.0"  iyz="0.0"  izz="1.0" />
+          </inertial>
+
+          <visual>
+            <geometry>
+              <box size="0.23 0.23 0.005" />
+            </geometry>
+          </visual>
+
+          <collision>
+            <geometry>
+              <box size="0.23 0.23 0.005" />
+            </geometry>
+          </collision>
+        </link>
+
+
+        <joint name="base_joint" type="fixed">
+        	<parent link="base_plate"/>
+        	<child link="base_link"/>
+        	<origin xyz="0 0 0.01" rpy="0 0 0"/>
+    	  </joint>
+
+        <link name="side_1">
+          <visual>
+            <geometry>
+              <box size="0.24 0.005 0.21" />
+            </geometry>
+          </visual>
+
+          <collision>
+            <geometry>
+              <box size="0.24 0.005 0.21" />
+            </geometry>
+          </collision>
+        </link>
+
+        <joint name="side1_joint" type="fixed">
+        	<parent link="base_link"/>
+        	<child link="side_1"/>
+        	<origin xyz="0 -0.1175 0.105" rpy="0 0 0"/>
+    	  </joint>
+
+        <link name="side_2">
+          <visual>
+            <geometry>
+              <box size="0.24 0.005 0.21" />
+            </geometry>
+          </visual>
+
+          <collision>
+            <geometry>
+              <box size="0.24 0.005 0.21" />
+            </geometry>
+          </collision>
+        </link>
+
+        <joint name="side2_joint" type="fixed">
+        	<parent link="base_link"/>
+        	<child link="side_2"/>
+        	<origin xyz="0 0.1175 0.105" rpy="0 0 0"/>
+    	  </joint>
+
+        <link name="side_3">
+          <visual>
+            <geometry>
+                <box size="0.005 0.23 0.21" />
+            </geometry>
+          </visual>
+
+          <collision>
+            <geometry>
+                <box size="0.005 0.23 0.21" />
+            </geometry>
+          </collision>
+        </link>
+
+        <joint name="side3_joint" type="fixed">
+        	<parent link="base_link"/>
+        	<child link="side_3"/>
+        	<origin xyz="0.1175 0.0 0.105" rpy="0 0 0"/>
+      	</joint>
+
+
+        <link name="side_4">
+          <visual>
+            <geometry>
+                <box size="0.005 0.23 0.21" />
+            </geometry>
+          </visual>
+
+          <collision>
+            <geometry>
+                <box size="0.005 0.23 0.21" />
+            </geometry>
+          </collision>
+        </link>
+
+        <joint name="side4_joint" type="fixed">
+        	<parent link="base_link"/>
+        	<child link="side_4"/>
+        	<origin xyz="-0.1175 0.0 0.105" rpy="0 0 0"/>
+    	  </joint>
+
+        <link name="side_1_top">
+          <visual>
+            <geometry>
+                <box size="0.24 0.005 0.13" />
+            </geometry>
+          </visual>
+
+          <collision>
+            <geometry>
+                <box size="0.24 0.005 0.13" />
+            </geometry>
+          </collision>
+        </link>
+
+        <joint name="side1_top_joint" type="fixed">
+        	<parent link="side_1"/>
+        	<child link="side_1_top"/>
+        	<origin xyz="0 -0.01 0.04" rpy="3 0 0"/>
+    	  </joint>
+
+        <link name="side_2_top">
+          <visual>
+            <geometry>
+                <box size="0.24 0.005 0.13" />
+            </geometry>
+          </visual>
+
+          <collision>
+            <geometry>
+                <box size="0.24 0.005 0.13" />
+            </geometry>
+          </collision>
+        </link>
+
+        <joint name="side2_top_joint" type="fixed">
+        	<parent link="side_2"/>
+        	<child link="side_2_top"/>
+        	<origin xyz="0 0.01 0.04" rpy="-3 0 0"/>
+    	  </joint>
+
+
+        <link name="side_3_top">
+          <visual>
+            <geometry>
+                <box size="0.005 0.23 0.13" />
+            </geometry>
+          </visual>
+
+          <collision>
+            <geometry>
+                <box size="0.005 0.023 0.13" />
+            </geometry>
+          </collision>
+        </link>
+
+        <joint name="side3_top_joint" type="fixed">
+        	<parent link="side_3"/>
+        	<child link="side_3_top"/>
+        	<origin xyz="0.0575 0 0.076" rpy="0 2 0"/>
+    	  </joint>
+
+        <link name="side_4_top">
+          <visual>
+            <geometry>
+                <box size="0.005 0.23 0.13" />
+            </geometry>
+          </visual>
+
+          <collision>
+            <geometry>
+                <box size="0.005 0.023 0.13" />
+            </geometry>
+          </collision>
+        </link>
+
+        <joint name="side4_top_joint" type="fixed">
+        	<parent link="side_4"/>
+        	<child link="side_4_top"/>
+        	<origin xyz="-0.0575 0 0.076" rpy="0 -2 0"/>
+    	  </joint>
+
+  <link name="camera_stand">
+   	  <visual>
+         <geometry>
+             <box size="0.005 0.005 0.3" />
+         </geometry>
+       </visual>
+       <collision>
+         <geometry>
+             <box size="0.005 0.005 0.3" />
+         </geometry>
+       </collision>
+   </link>
+
+    <joint name="camera_stand_joint" type="fixed">
+        <parent link="base_plate"/>
+        <child link="camera_stand"/>
+        <origin xyz="0.135 0.135 0.15" rpy="0 0 0"/>
+    </joint>
+
+  <link name="camera_link">
+  	  <visual>
+        <geometry>
+            <box size="0.005 0.03 0.03" />
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+            <box size="0.005 0.03 0.03" />
+        </geometry>
+      </collision>
+  </link>
+
+  <joint name="camera_joint" type="fixed">
+        <parent link="camera_stand"/>
+        <child link="camera_link"/>
+        <origin xyz="0.0 0.0 0.15" rpy="0 0 -2.36"/>
+  </joint>
+
+    <link name="lamp">
+      <visual>
+          <geometry>
+              <box size="0.0001 0.0001 0.0001" />
+          </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <box size="0.05 0.010 0.00001" />
+        </geometry>
+       </collision>
+      </link>
+  <joint name="light_joint" type="fixed">
+    <parent link="camera_link"/>
+        <child link="lamp"/>
+         <origin xyz="0.0 0.0 0.0" rpy="1.57 0 0"/>
+  </joint>
+
+<!--
+   <gazebo>
+          <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+              <robotNamespace>/</robotNamespace>
+              <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+              <legacyModeNS>true</legacyModeNS>
+          </plugin>
+      </gazebo>
+-->
+      <gazebo reference="base_footprint">
+          <gravity>true</gravity>
+      </gazebo>
+
+      <gazebo reference="base_link">
+          <material>Gazebo/White</material>
+      </gazebo>
+
+      <gazebo reference="head_link">
+          <material>Gazebo/White</material>
+      </gazebo>
+
+      <gazebo reference="base_plate">
+          <material>ArucoMaterial</material>
+      </gazebo>
+
+     <!-- <gazebo reference="lamp"> -->
+      <gazebo reference="lamp">
+          <!--<visual>
+              <material>
+                  <ambient>0 0 0 1</ambient>
+                  <diffuse>0 0 0 1</diffuse>
+                  <specular>0 0 0 1</specular>
+                  <emissive>0 1 0 1</emissive>
+              </material>
+          </visual>
+          -->
+          <light name="lamp/light_source1" type='spot'>
+                <pose>0.14 0.14 0.7 -1.57 0.0 -0.78</pose>
+                <diffuse>1 1 1 1</diffuse>
+                <specular>.1 .1 .1 1</specular>
+                <attenuation>
+                  <range>20</range>
+                  <linear>0.87</linear>
+                  <constant>0.9</constant>
+                  <quadratic>0.01</quadratic>
+                </attenuation>
+                <cast_shadows>true</cast_shadows>
+          </light>
+          <plugin name='light_source1' filename='libFlashLightPlugin.so'>
+              <enable>true</enable>
+              <light>
+                  <id>lamp/light_source1</id>
+                  <duration>0.3</duration>
+                  <interval>0</interval>
+                  <color>1 1 1</color>
+                  <enable>true</enable>
+              </light>
+          </plugin>
+          <selfCollide>false</selfCollide>
+      </gazebo>
+
+      <gazebo reference="camera_link">
+          <sensor type="camera" name="sensor_name">
+              <update_rate>30.0</update_rate>
+
+              <!-- Set always_on only sensor, not on plugin -->
+              <always_on>1</always_on>
+
+              <!-- Set update_rate only sensor, not on plugin -->
+              <update_rate>100</update_rate>
+
+              <camera name="camera_name">
+
+                  <!--   <distortion>
+                       <k1>0.1</k1>
+                       <k2>0.2</k2>
+                       <k3>0.3</k3>
+                       <p1>0.4</p1>
+                       <p2>0.5</p2>
+                       <center>0.5 0.5</center>
+                     </distortion>-->
+                  <horizontal_fov>1.3962634</horizontal_fov>
+                  <image>
+                      <width>1920</width>
+                      <height>1080</height>
+                      <format>R8G8B8</format>
+                  </image>
+                  <clip>
+                      <near>0.02</near>
+                      <far>300</far>
+                  </clip>
+                  <noise>
+                      <type>gaussian</type>
+                      <!-- Noise is sampled independently per pixel on each frame.
+                           That pixel's noise value is added to each of its color
+                           channels, which at that point lie in the range [0,1]. -->
+                      <mean>0.0</mean>
+                      <stddev>0.007</stddev>
+                  </noise>
+              </camera>
+
+              <!-- Use camera, not camera_triggered -->
+              <plugin name="plugin_name" filename="libgazebo_ros_camera.so">
+                  <!-- Change namespace, camera name and topics so:
+                       * Images are published to: /custom_ns/custom_camera/custom_image
+                       * Camera info is published to: /custom_ns/custom_camera/custom_info
+                  -->
+                  <ros>
+                      <namespace>custom_ns</namespace>
+                      <argument>image_raw:=custom_img</argument>
+                      <argument>camera_info:=custom_info</argument>
+                  </ros>
+
+                  <!-- Set camera name. If empty, defaults to sensor name (i.e. "sensor_name") -->
+                  <camera_name>custom_camera</camera_name>
+
+                  <!-- Set TF frame name. If empty, defaults to link name (i.e. "link_name") -->
+                  <frame_name>custom_frame</frame_name>
+
+                  <hack_baseline>0.07</hack_baseline>
+
+                  <!-- No need to repeat distortion parameters or to set autoDistortion -->
+              </plugin>
+          </sensor>
+      </gazebo>
+</robot>

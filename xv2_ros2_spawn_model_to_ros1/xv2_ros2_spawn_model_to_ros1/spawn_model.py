@@ -15,6 +15,7 @@
 import os
 import sys
 import rclpy
+from rclpy.parameter import Parameter
 
 import argparse
 import math
@@ -27,75 +28,55 @@ from gazebo_msgs.srv import SpawnModel
 from geometry_msgs.msg import Pose, Point, Quaternion
 import rclpy
 from rclpy.node import Node
+# from gazebo_ros import gazebo_interface
 
 class SpawnModelNode(Node):
 
     def __init__(self, args):
-        super().__init__('spawn_entity')
-        parser = argparse.ArgumentParser(
-            description='Spawn an entity in gazebo. Gazebo must be started with gazebo_ros_init,\
-            gazebo_ros_factory and gazebo_ros_state for all functionalities to work')
+        super().__init__('spawn_entity', allow_undeclared_parameters=True,
+                         automatically_declare_parameters_from_overrides=True)
+        print("I am at init!")
 
-        source = parser.add_mutually_exclusive_group(required=True)
-        source.add_argument('-file', type=str, metavar='FILE_NAME',
-                            help='Load entity xml from file')
+        # self.declare_parameter('file')
 
-        parser.add_argument('-entity', required=True, type=str, metavar='ENTITY_NAME',
-                            help='Name of entity to spawn')
-
-        parser.add_argument('-reference_frame', type=str, default='',
-                            help='Name of the model/body where initial pose is defined.\
-                            If left empty or specified as "world", gazebo world frame is used')
-
-        parser.add_argument('-gazebo_namespace', type=str, default='',
-                            help='ROS namespace of gazebo offered ROS interfaces. \
-                            Default is without any namespace')
-
-        parser.add_argument('-robot_namespace', type=str, default=self.get_namespace(),
-                            help='change ROS namespace of gazebo-plugins')
-
-        parser.add_argument('-unpause', action='store_true',
-                            help='unpause physics after spawning entity')
-
-        parser.add_argument('-sdf', dest='sdf', action='store_true',
-                            help='Spawn sdf model')
-
-        parser.add_argument('-wait', type=str, metavar='ENTITY_NAME',
-                            help='Wait for entity to exist')
-        parser.add_argument('-x', type=float, default=0,
-                            help='x component of initial position, meters')
-        parser.add_argument('-y', type=float, default=0,
-                            help='y component of initial position, meters')
-        parser.add_argument('-z', type=float, default=0,
-                            help='z component of initial position, meters')
-        parser.add_argument('-R', type=float, default=0,
-                            help='roll angle of initial orientation, radians')
-        parser.add_argument('-P', type=float, default=0,
-                            help='pitch angle of initial orientation, radians')
-        parser.add_argument('-Y', type=float, default=0,
-                            help='yaw angle of initial orientation, radians')
-
-        self.args = parser.parse_args(args[1:])
+        self.entity = self.get_parameter_or('entity', Parameter('entity', Parameter.Type.STRING, 'waffle')).value
+        self.file = self.get_parameter_or('file', Parameter('file', Parameter.Type.STRING, "./unknown.urdf")).value
+        self.reference_frame = self.get_parameter_or('reference_frame', Parameter('reference_frame', Parameter.Type.STRING, "")).value
+        self.gazebo_namespace = self.get_parameter_or('gazebo_namespace', Parameter('gazebo_namespace', Parameter.Type.STRING, "/gazebo")).value
+        self.robot_namespace = self.get_parameter_or('robot_namespace', Parameter('robot_namespace', Parameter.Type.STRING, "")).value
+        self.unpause = self.get_parameter_or('unpause', Parameter('unpause', Parameter.Type.BOOL, True)).value
+        self.sdf = self.get_parameter_or('sdf', Parameter('sdf', Parameter.Type.BOOL, False)).value
+        self.wait = self.get_parameter_or('wait', Parameter('wait', Parameter.Type.STRING, "")).value
+        self.x = self.get_parameter_or('x', Parameter('x', Parameter.Type.DOUBLE, 0.0)).value
+        self.y = self.get_parameter_or('y', Parameter('y', Parameter.Type.DOUBLE, 0.0)).value
+        self.z = self.get_parameter_or('z', Parameter('z', Parameter.Type.DOUBLE, 0.0)).value
+        self.R = self.get_parameter_or('R', Parameter('R', Parameter.Type.DOUBLE, 0.0)).value
+        self.P = self.get_parameter_or('P', Parameter('P', Parameter.Type.DOUBLE, 0.0)).value
+        self.Y = self.get_parameter_or('Y', Parameter('Y', Parameter.Type.DOUBLE, 0.0)).value
 
     def run(self):
         # Load entity XML from file
-        if self.args.file:
-            self.get_logger().info('Loading entity XML from file %s' % self.args.file)
-            if not os.path.exists(self.args.file):
-                self.get_logger().error('Error: specified file %s does not exist', self.args.file)
-                return 1
-            if not os.path.isfile(self.args.file):
-                self.get_logger().error('Error: specified file %s is not a file', self.args.file)
+        if self.file:
+            self.get_logger().info('Loading entity XML from file %s' % self.file)
+            # if not os.path.exists(str(self.file)):
+            #     print("I am at error1!")
+            #     # self.get_logger().error('Error: specified file %s does not exist', self.file)
+            #     return 1
+            if not os.path.isfile(self.file):
+                # self.get_logger().error('Error: specified file %s is not a file', str(self.file))
+                print("I am at error2")
                 return 1
             # load file
             try:
-                f = open(self.args.file, 'r')
+                print("I am at open!")
+                f = open(self.file, 'r')
                 entity_xml = f.read()
             except IOError as e:
-                self.get_logger().error('Error reading file {}: {}'.format(self.args.file, e))
+                self.get_logger().error('Error reading file {}: {}'.format(str(self.file), e))
                 return 1
             if entity_xml == '':
-                self.get_logger().error('Error: file %s is empty', self.args.file)
+                print("I am at entity_xml == '':")
+                self.get_logger().error('Error: file %s is empty', str(self.file))
                 return 1
         # Parse xml to detect invalid xml before sending to gazebo
         try:
@@ -107,19 +88,20 @@ class SpawnModelNode(Node):
         # Encode xml object back into string for service call
         entity_xml = ElementTree.tostring(xml_parsed)
 
+        print("I am at initial_pose = Pose()")
         # Form requested Pose from arguments
         initial_pose = Pose()
-        initial_pose.position.x = float(self.args.x)
-        initial_pose.position.y = float(self.args.y)
-        initial_pose.position.z = float(self.args.z)
+        initial_pose.position.x = float(self.x)
+        initial_pose.position.y = float(self.y)
+        initial_pose.position.z = float(self.z)
 
-        q = quaternion_from_euler(self.args.R, self.args.P, self.args.Y)
+        q = quaternion_from_euler(self.R, self.P, self.Y)
         initial_pose.orientation.w = q[0]
         initial_pose.orientation.x = q[1]
         initial_pose.orientation.y = q[2]
         initial_pose.orientation.z = q[3]
 
-        if self.args.sdf:
+        if self.sdf:
             success = self._spawn_sdf_entity(entity_xml, initial_pose)
         else:
             success = self._spawn_entity(entity_xml, initial_pose)
@@ -130,16 +112,23 @@ class SpawnModelNode(Node):
         return 0
 
     def _spawn_entity(self, entity_xml, initial_pose):
-        self.get_logger().info('Waiting for service %s/spawn_urdf_model' % self.args.gazebo_namespace)
-        client = self.create_client(SpawnModel, '%s/spawn_urdf_model' % self.args.gazebo_namespace)
+        self.get_logger().info('Waiting for service %s/spawn_urdf_model' % self.gazebo_namespace)
+        self.get_logger().info('SpawnModel type %s' % type(SpawnModel))
+
+        client = self.create_client(SpawnModel, '%s/spawn_urdf_model' % self.gazebo_namespace)
+        # self.model_name = self.entity
+        # self.model_xml = str(entity_xml, 'utf-8')
+        # success = gazebo_interface.spawn_urdf_model_client(self.model_name, model_xml, self.robot_namespace,
+        #                                                    initial_pose, self.reference_frame, self.gazebo_namespace)
+
         if client.wait_for_service(timeout_sec=5.0):
             req = SpawnModel.Request()
-            req.model_name = self.args.entity
+            req.model_name = self.entity
             req.model_xml = str(entity_xml, 'utf-8')
-            req.robot_namespace = self.args.robot_namespace
+            req.robot_namespace = self.robot_namespace
             req.initial_pose = initial_pose
-            req.reference_frame = self.args.reference_frame
-            self.get_logger().info('Calling service %s/spawn_urdf_model' % self.args.gazebo_namespace)
+            req.reference_frame = self.reference_frame
+            self.get_logger().info('Calling service %s/spawn_urdf_model' % self.gazebo_namespace)
             srv_call = client.call_async(req)
             while rclpy.ok():
                 if srv_call.done():
@@ -152,16 +141,16 @@ class SpawnModelNode(Node):
         return False
 
     def _spawn_sdf_entity(self, entity_xml, initial_pose):
-        self.get_logger().info('Waiting for service %s/spawn_sdf_model' % self.args.gazebo_namespace)
-        client = self.create_client(SpawnModel, '%s/spawn_sdf_model' % self.args.gazebo_namespace)
+        self.get_logger().info('Waiting for service %s/spawn_sdf_model' % self.gazebo_namespace)
+        client = self.create_client(SpawnModel, '%s/spawn_sdf_model' % self.gazebo_namespace)
         if client.wait_for_service(timeout_sec=5.0):
             req = SpawnModel.Request()
-            req.model_name = self.args.entity
+            req.model_name = self.entity
             req.model_xml = str(entity_xml, 'utf-8')
-            req.robot_namespace = self.args.robot_namespace
+            req.robot_namespace = self.robot_namespace
             req.initial_pose = initial_pose
-            req.reference_frame = self.args.reference_frame
-            self.get_logger().info('Calling service %s/spawn_sdf_model' % self.args.gazebo_namespace)
+            req.reference_frame = self.reference_frame
+            self.get_logger().info('Calling service %s/spawn_sdf_model' % self.gazebo_namespace)
             srv_call = client.call_async(req)
             while rclpy.ok():
                 if srv_call.done():

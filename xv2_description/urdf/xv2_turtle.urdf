@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <robot name="simple_box">
-  
+
     <material name="blue">
         <color rgba= "0 0 1 1"/>
     </material>
@@ -245,6 +245,78 @@
     	<child link="side_4_top"/>
     	<origin xyz="-0.0575 0 0.076" rpy="0 -2 0"/>
 	  </joint>
+
+
+
+	  <link name="camera_link">
+
+	  <visual>
+              <geometry>
+                  <box size="0.005 0.03 0.03" />
+              </geometry>
+            </visual>
+
+            <collision>
+              <geometry>
+                  <box size="0.005 0.03 0.03" />
+              </geometry>
+            </collision>
+    </link>
+
+                    <joint name="camera_joint" type="fixed">
+                      	<parent link="base_link"/>
+                      	<child link="camera_link"/>
+                      	<origin xyz="1.575 0.4 0.76" rpy="0 -2 0"/>
+                  	  </joint>
+
+ <gazebo reference="camera_link">
+              <sensor type="camera" name="sensor_name">
+
+
+                <!-- Set always_on only sensor, not on plugin -->
+                <always_on>1</always_on>
+
+                <!-- Set update_rate only sensor, not on plugin -->
+                <update_rate>100</update_rate>
+
+                <camera name="camera_name">
+
+                  <distortion>
+                    <k1>0.1</k1>
+                    <k2>0.2</k2>
+                    <k3>0.3</k3>
+                    <p1>0.4</p1>
+                    <p2>0.5</p2>
+                    <center>0.5 0.5</center>
+                  </distortion>
+                </camera>
+
+                <!-- Use camera, not camera_triggered -->
+                <plugin name="plugin_name" filename="libgazebo_ros_camera.so">
+                  <!-- Change namespace, camera name and topics so:
+                       * Images are published to: /custom_ns/custom_camera/custom_image
+                       * Camera info is published to: /custom_ns/custom_camera/custom_info
+                  -->
+                  <ros>
+                    <namespace>custom_ns</namespace>
+                    <argument>image_raw:=custom_img</argument>
+                    <argument>camera_info:=custom_info</argument>
+                  </ros>
+
+                  <!-- Set camera name. If empty, defaults to sensor name (i.e. "sensor_name") -->
+                  <camera_name>custom_camera</camera_name>
+
+                  <!-- Set TF frame name. If empty, defaults to link name (i.e. "link_name") -->
+                  <frame_name>custom_frame</frame_name>
+
+                  <hack_baseline>0.07</hack_baseline>
+
+                  <!-- No need to repeat distortion parameters or to set autoDistortion -->
+                </plugin>
+              </sensor>
+      </gazebo>
+
+
 
 
   <gazebo reference="base_plate">
