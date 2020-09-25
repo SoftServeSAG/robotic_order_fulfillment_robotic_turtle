@@ -54,7 +54,6 @@ install(TARGETS
         DESTINATION lib/${PROJECT_NAME})
 
 install(DIRECTORY
-        launch
         DESTINATION share/${PROJECT_NAME})
 
 find_package(PkgConfig REQUIRED)
