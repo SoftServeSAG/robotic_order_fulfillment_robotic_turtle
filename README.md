@@ -42,13 +42,7 @@ Run docker container
 sudo ./run.bash
 ```
 
-Inside docker container
-```bash
-cd ~/ws/src/robotic_order_fulfillment_robotic_turtle/scripts
-./start.sh
-```
-
-## Build ros1_bridge from sources
+## Build
 Inside docker container
 ```bash
 cd ~/ws
@@ -71,7 +65,12 @@ Check if ros1_bridge has been built correctly and with all needed messages
 ```bash
 ros2 run ros1_bridge dynamic_bridge --print-pairs
 ```
-
+## Run
+Inside docker container
+```bash
+cd ~/ws/src/robotic_order_fulfillment_robotic_turtle/scripts
+./start.sh
+```
 
 ## Spawn turtlebot model to ROS1 simulation
 For spawning model to ROS1 simulation application ros2_spawn_robot_to_ros1 has been created.
